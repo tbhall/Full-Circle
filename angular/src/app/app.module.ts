@@ -3,12 +3,6 @@ import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 
-//routedComponents
-
-//Auth Components
-import {LoginComponent } from './auth/login/login.component';
-
-
 //AppRoutingModule
 import { AppRoutingModule } from './app-routing.module';
 

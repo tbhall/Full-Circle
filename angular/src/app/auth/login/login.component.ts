@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-
+import { Router } from '@angular/router';
 /**
   Component:
     For the main application
@@ -14,11 +14,15 @@ export class LoginComponent implements OnInit {
   /**
     Initializes new names for the imports
   */
-  constructor() {
+  constructor(protected router: Router) {
   }
   /**
     Tracking page analytics
   */
   ngOnInit(): void {
+  }
+
+  login() {
+    this.router.navigate(['pages/dashboard']);
   }
 }
