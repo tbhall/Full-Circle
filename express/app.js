@@ -1,18 +1,16 @@
-var express = require('express');
-var path = require('path');
-var logger = require('morgan');
-var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
-var mongoose = require('mongoose');
-var config = require('./config/database');
-
+const express = require('express');
+const path = require('path');
+const logger = require('morgan');
+const cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
+const config = require('./config/database');
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 
 // Get the API route ...
-var api = require('./routes/api.route');
-
-var app = express();
+const api = require('./routes/api.route');
+const app = express();
 // var apiRouter = require('./api/api.route');
 
 

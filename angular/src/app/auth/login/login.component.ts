@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthenticationService } from '../../_shared/api_services/authentication.service'
 /**
   Component:
     For the main application
@@ -14,7 +15,8 @@ export class LoginComponent implements OnInit {
   /**
     Initializes new names for the imports
   */
-  constructor(protected router: Router) {
+  constructor(protected router: Router,
+              protected authenticationService: AuthenticationService) {
   }
   /**
     Tracking page analytics
@@ -23,6 +25,7 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-    this.router.navigate(['pages/dashboard']);
+    this.authenticationService.login("tbhall", "1234");
+    //this.router.navigate(['pages/dashboard']);
   }
 }
