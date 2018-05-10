@@ -16,22 +16,9 @@ router.post('/register', function(req, res, next) {
   });
 });
 
-router.post('/login', function (req, res, next) {
-    passport.authenticate('local', {session: false}, (err, user, info) => {
-        if (err || !user) {
-            return res.status(400).json({
-                message: 'Unsuccessful Login'
-            });
-        }
-       req.login(user, {session: false}, (err) => {
-           if (err) {
-               res.send(err);
-           }
-           // generate a signed son web token with the contents of user object and return it in the response
-           const token = jwt.sign(user, config.secret);
-           return res.status(200).json({status: 200, data: {username: user.username, token: token}, message: "Successfully Logged In"});
-        });
-    })(req, res);
+router.post('/login', passport.authenticate('local', {session: false}), function(req, res) {
+  const token = jwt.sign({username: req.body.username, iat: Math.floor(Date.now() / 1000) - 30}, config.secret);
+  return res.status(200).json({status: 200, data: {username: req.body.username, token: token}, message: "Successfully Logged In"});
 });
 
 module.exports = router;
