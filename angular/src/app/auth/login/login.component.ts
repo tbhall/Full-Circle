@@ -13,6 +13,7 @@ import { AuthenticationService } from '../../_shared/api_services/authentication
 export class LoginComponent implements OnInit {
 
     user: any = {};
+    username: any;
   /**
     Initializes new names for the imports
   */
@@ -26,6 +27,6 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-    this.authenticationService.login("tbhall", "1234");
+    this.authenticationService.login(this.user.username, this.user.password);
   }
 }

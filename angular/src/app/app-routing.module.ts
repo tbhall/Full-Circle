@@ -1,11 +1,11 @@
 import { ExtraOptions, RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
-
+import { CanActivateUser } from './_shared/api_services/authentication.service';
 // Main Routes
 
 const routes: Routes = [
   { path: 'auth', loadChildren: 'app/auth/auth.module#AuthModule'},
-  { path: 'pages', loadChildren: 'app/pages/pages.module#PagesModule'},
+  { path: 'pages', canActivate: [CanActivateUser], loadChildren: 'app/pages/pages.module#PagesModule'},
   { path: '', redirectTo: '/auth/login', pathMatch: 'full'},
   { path: '**', redirectTo: '/auth/login' },
 ];

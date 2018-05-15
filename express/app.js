@@ -50,6 +50,24 @@ passport.use(new LocalStrategy(Account.authenticate()));
 passport.serializeUser(Account.serializeUser());
 passport.deserializeUser(Account.deserializeUser());
 
+//JWT AUTHENTICATION
+app.all('/api/*', function(req, res, next) {
+
+  if(req.url === '/api/accounts/login' || req.url === '/api/accounts/registration' || req.url === '/api/token/valid') {
+    next();
+  } else {
+    if (req.headers.authorization && req.headers.authorization.split(' ')[0] === 'Bearer') {
+      try {
+        var decoded = jwt.verify(req.headers.authorization.split(' ')[1], config.secret);
+      } catch(err) {
+        res.status(401).send({ error: 'Not valid token' })
+      }
+      next();
+    } else {
+      res.status(400).send({ error: 'No token' })
+    }
+  }
+});
 //Use the API routes in api.route.js
 app.use(api);
 

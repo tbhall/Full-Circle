@@ -1,24 +1,22 @@
-var JwtStrategy = require('passport-jwt').Strategy,
-    ExtractJwt = require('passport-jwt').ExtractJwt;
+//passport.js
+const passportJWT = require("passport-jwt");
+const JWTStrategy   = passportJWT.Strategy;
+const ExtractJWT = passportJWT.ExtractJwt;
+const config = require("database");
 
-// load up the user model
-var User = require('../models/user');
-var config = require('../config/database'); // get db config file
+passport.use(new JWTStrategy({
+        jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
+        secretOrKey   : config.secret;
+    },
+    function (jwtPayload, cb) {
 
-module.exports = function(passport) {
-  var opts = {};
-  opts.jwtFromRequest = ExtractJwt.fromAuthHeaderWithScheme("jwt");
-  opts.secretOrKey = config.secret;
-  passport.use(new JwtStrategy(opts, function(jwt_payload, done) {
-    User.findOne({id: jwt_payload.id}, function(err, user) {
-          if (err) {
-              return done(err, false);
-          }
-          if (user) {
-              done(null, user);
-          } else {
-              done(null, false);
-          }
-      });
-  }));
-};
+        //find the user in db if needed. This functionality may be omitted if you store everything you'll need in JWT payload.
+        return Account.findOne({username: jwtPayload.username})
+            .then(user => {
+                return cb(null, user);
+            })
+            .catch(err => {
+                return cb(err);
+            });
+    }
+));

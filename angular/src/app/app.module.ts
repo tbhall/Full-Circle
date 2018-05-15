@@ -11,7 +11,7 @@ import { AppRoutingModule } from './app-routing.module';
 
 //Service
 import { SpinnerService } from './_shared/@theme/services/spinner.service'
-import { AuthenticationService } from './_shared/api_services/authentication.service'
+import { AuthenticationService, CanActivateUser } from './_shared/api_services/authentication.service'
 
 
 @NgModule({
@@ -26,7 +26,8 @@ import { AuthenticationService } from './_shared/api_services/authentication.ser
   ],
   providers: [
     SpinnerService,
-    AuthenticationService],
+    AuthenticationService,
+    CanActivateUser],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
